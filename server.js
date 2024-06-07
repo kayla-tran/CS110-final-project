@@ -4,13 +4,11 @@ const hbs = require('express-handlebars');
 const path = require('path');
 const { MongoClient } = require('mongodb');
 
-
 // Import handlers
 const homeHandler = require('./controllers/home.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
-// const port = 8080;
 
 // MongoDB connection setup
 const uri = "mongodb+srv://kelseymoose346:opZ67GDDM8cB9gkB@fyp.b3mredm.mongodb.net/?retryWrites=true&w=majority&appName=FYP";
@@ -35,18 +33,17 @@ async function connectToDatabase() {
 }
 connectToDatabase();
 
-//GIVEN CODE
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // View engine setup
-//MIGHT NEED .ENGINE
 app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts/' }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-//add calls here:
+// Routes
+app.get('/', homeHandler.getHome);
 
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
