@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const hbs = require('express-handlebars');
 const path = require('path');
 const { MongoClient } = require('mongodb');
-const bcrypt = require('bcrypt');  // For password hashing
+const bcrypt = require('bcrypt'); // For password hashing
 const session = require('express-session');
 const cors = require('cors'); // Import cors middleware
 
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  // secret: 'your_secret_key', // Remove or comment out this line
+  secret: 'your_secret_key', // Add a proper secret key
   resave: false,
   saveUninitialized: true
 }));
@@ -61,40 +61,50 @@ function isAuthenticated(req, res, next) {
 
 // User registration route
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  const db = req.app.locals.db;
-  const users = db.collection('users');
-  
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = { username, password: hashedPassword };
+  try {
+    const { username, password } = req.body;
+    const db = req.app.locals.db;
+    const users = db.collection('users');
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = { username, password: hashedPassword };
 
-  const existingUser = await users.findOne({ username });
-  if (existingUser) {
-    return res.status(400).json({ error: 'Username already exists' });
+    const existingUser = await users.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    await users.insertOne(newUser);
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (err) {
+    console.error("Registration error:", err);
+    res.status(500).json({ error: 'Internal server error' });
   }
-
-  await users.insertOne(newUser);
-  res.status(201).json({ message: 'User registered successfully' });
 });
 
 // User login route
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const db = req.app.locals.db;
-  const users = db.collection('users');
-  
-  const user = await users.findOne({ username });
-  if (!user) {
-    return res.status(400).json({ error: 'Invalid username or password' });
-  }
+  try {
+    const { username, password } = req.body;
+    const db = req.app.locals.db;
+    const users = db.collection('users');
+    
+    const user = await users.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid username or password' });
+    }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(400).json({ error: 'Invalid username or password' });
-  }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: 'Invalid username or password' });
+    }
 
-  req.session.user = user;
-  res.status(200).json({ message: 'Login successful' });
+    req.session.user = user;
+    res.status(200).json({ message: 'Login successful' });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Example route to get user info
