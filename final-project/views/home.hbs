@@ -1,3 +1,41 @@
-<h1>Welcome to the Food Enthusiast Community</h1>
-<div id="root"></div>
-<script src="/js/script.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Enthusiasts</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/trending">Trending</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/account">Account</a></li>
+        </ul>
+    </nav>
+
+    <h1>Welcome to Food Enthusiasts</h1>
+
+    <h2>Register</h2>
+    <form action="/register" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Register</button>
+    </form>
+
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
