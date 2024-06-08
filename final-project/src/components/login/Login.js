@@ -12,21 +12,26 @@ const Login = () => {
 
     const url = isRegister ? 'http://localhost:8080/register' : 'http://localhost:8080/login';
     console.log('Sending request to:', url);
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-    const data = await response.json();
-    console.log('Response:', data);
-    if (data.error) {
-      setMessage(data.error);
-    } else {
-      setMessage(data.message);
-      // Redirect or set authentication token, etc., based on your application flow
+      const data = await response.json();
+      console.log('Response:', data);
+      if (data.error) {
+        setMessage(data.error);
+      } else {
+        setMessage(data.message);
+        // Redirect or set authentication token, etc., based on your application flow
+      }
+    } catch (err) {
+      console.error("Error during fetch:", err);
+      setMessage('An error occurred. Please try again later.');
     }
   };
 
