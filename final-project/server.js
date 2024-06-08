@@ -5,6 +5,7 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt');  // For password hashing
 const session = require('express-session');
+const cors = require('cors'); // Import cors middleware
 
 // Import handlers
 const homeHandler = require('./controllers/home.js');
@@ -39,10 +40,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  secret: 'your_secret_key',
+  // secret: 'your_secret_key', // Remove or comment out this line
   resave: false,
   saveUninitialized: true
 }));
+app.use(cors()); // Use cors middleware to enable CORS
 
 // View engine setup
 app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: path.join(__dirname, 'views/layouts') }));

@@ -10,7 +10,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = isRegister ? '/register' : '/login';
+    const url = isRegister ? 'http://localhost:8080/register' : 'http://localhost:8080/login';
+    console.log('Sending request to:', url);
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -20,10 +21,12 @@ const Login = () => {
     });
 
     const data = await response.json();
+    console.log('Response:', data);
     if (data.error) {
       setMessage(data.error);
     } else {
       setMessage(data.message);
+      // Redirect or set authentication token, etc., based on your application flow
     }
   };
 
