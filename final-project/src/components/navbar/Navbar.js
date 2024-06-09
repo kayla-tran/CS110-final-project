@@ -5,11 +5,13 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <nav>
-      <ul><Link to="/">Home</Link></ul>
-      <ul><Link to="/trending">Trending</Link></ul>
-      <ul><Link to="/search">Search</Link></ul>
-      <ul><Link to="/account">Account</Link></ul>
-      <ul><Link to="/create-post">Create Post</Link></ul>
+      <div className="bar">
+        <ul><Link to="/">Home</Link></ul>
+        <ul><Link to="/trending">Trending</Link></ul>
+        <ul><Link to="/search">Search</Link></ul>
+        <ul><Link to="/account">Account</Link></ul>
+        <ul><Link to="/create-post">Create Post</Link></ul>
+      </div>
     </nav>
   );
 };

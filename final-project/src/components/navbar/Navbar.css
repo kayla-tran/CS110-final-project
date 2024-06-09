@@ -1,0 +1,24 @@
+.bar {
+    display: flex;
+    align-items: center;
+    background-color: lightblue; /* Example background color */
+    color: black; /* Example text color */
+    padding: 10px 20px; /* Example padding */
+  }
+  
+  .bar ul {
+    list-style: none;
+    display: flex; /* Display list items as flex items */
+  }
+  
+  .bar ul li {
+    margin-left: auto; /* Align each list item to the right */
+  }
+  
+  .bar ul li a {
+    text-decoration: none;
+    color: white; 
+    
+  }
+  
+  
