@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const Login = () => {
+const Login = ({ setAuthToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isRegister, setIsRegister] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const url = isRegister ? 'http://localhost:8080/register' : 'http://localhost:8080/login';
-    console.log('Sending request to:', url);
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -22,13 +23,21 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log('Response:', data);
+      console.log('Login response data:', data); // Debugging
+
       if (data.error) {
         setMessage(data.error);
       } else {
-        setMessage(data.message);
-        localStorage.setItem('authToken', data.token); // Store authentication token
-        // Redirect or set authentication token, etc., based on your application flow
+        if (data.token) {
+          setMessage(data.message);
+          localStorage.setItem('authToken', data.token);
+          console.log('Token set in localStorage:', data.token); // Debugging
+          setAuthToken(data.token);
+          navigate('/account');
+        } else {
+          console.error('No token found in response data');
+          setMessage('No token found in response data');
+        }
       }
     } catch (err) {
       console.error("Error during fetch:", err);

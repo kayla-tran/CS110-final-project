@@ -4,11 +4,8 @@ const hbs = require('express-handlebars');
 const path = require('path');
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt'); // For password hashing
-const session = require('express-session');
+const jwt = require('jsonwebtoken'); // For JWT authentication
 const cors = require('cors'); // Import cors middleware
-
-// Import handlers
-const homeHandler = require('./controllers/home.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -39,11 +36,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'your_secret_key', // Add a proper secret key
-  resave: false,
-  saveUninitialized: true
-}));
 app.use(cors()); // Use cors middleware to enable CORS
 
 // View engine setup
@@ -51,12 +43,20 @@ app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'layout', layoutsD
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// Middleware for session-based authentication
-function isAuthenticated(req, res, next) {
-  if (req.session.user) {
-    return next();
+// Middleware to verify JWT token
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(403).json({ error: 'No token provided' });
   }
-  res.status(401).json({ error: 'Unauthorized' });
+
+  jwt.verify(token, 'your_secret_key', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Failed to authenticate token' });
+    }
+    req.userId = decoded.userId;
+    next();
+  });
 }
 
 // User registration route
@@ -99,8 +99,9 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
-    req.session.user = user;
-    res.status(200).json({ message: 'Login successful' });
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
+    res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: 'Internal server error' });
@@ -108,8 +109,8 @@ app.post('/login', async (req, res) => {
 });
 
 // Example route to get user info
-app.get('/profile', isAuthenticated, (req, res) => {
-  res.status(200).json({ user: req.session.user });
+app.get('/profile', verifyToken, (req, res) => {
+  res.status(200).json({ user: req.userId });
 });
 
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
