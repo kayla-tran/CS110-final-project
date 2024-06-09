@@ -19,9 +19,13 @@ const Home = () => {
   return (
     <div>
       {posts.map((post) => (
-        <div key={post._id}>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
+        <div className="post">
+          <div key={post._id}>
+            <h3>{post.title}</h3>
+            <img src={post.image} alt="chk pot pie"/>
+            <p>{post.caption}</p>
+            <p>{post.content}</p>
+          </div>
         </div>
       ))}
     </div>
