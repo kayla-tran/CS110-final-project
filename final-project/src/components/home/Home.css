@@ -1,4 +1,51 @@
 .post{
-    display:flex;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    
+    background-color: #ffffff; /* Background color of the container */
+    border: 1px solid #ccc; /* Optional border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 20px 20px 20px;
+    box-sizing: border-box; 
+    margin-top: 120px;
+
+}
+
+.element{
+    margin: 10px;
+    padding: 20px;
+    background-color: #007bff;
+    color: white;
+    width: 100%; /* Make elements full width of container */
+    text-align: center;
+}
+
+.top-bar{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.top-bar h3{
+    margin-top: 30px;
+    font-size: 24px;
+}
+
+.top-bar p{
+    margin-left: auto;
+    margin-top: 35px;
+     
+}
+
+
+.chefHat{
+    width: 100px;
+    border-radius: 50%;
 }

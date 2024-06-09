@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 const PostForm = ({ authToken, onPostCreated }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [caption, setCaption] = useState('');
+  const [image, setImage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,8 @@ const PostForm = ({ authToken, onPostCreated }) => {
         onPostCreated(post);
         setTitle('');
         setContent('');
+        setCaption('');
+        setImage('');
       } else {
         console.error('Failed to create post');
       }
@@ -43,6 +47,21 @@ const PostForm = ({ authToken, onPostCreated }) => {
         onChange={(e) => setContent(e.target.value)}
         required
       ></textarea>
+
+        <input
+        type="text"
+        placeholder="Caption"
+        value={caption}
+        onChange={(e) => setCaption(e.target.value)}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Image URL"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+        required
+      />
       <button type="submit">Create Post</button>
     </form>
   );
