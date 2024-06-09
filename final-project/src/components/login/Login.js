@@ -11,7 +11,6 @@ const Login = ({ setAuthToken }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const url = isRegister ? 'http://localhost:8080/register' : 'http://localhost:8080/login';
     try {
       const response = await fetch(url, {
@@ -23,24 +22,19 @@ const Login = ({ setAuthToken }) => {
       });
 
       const data = await response.json();
-      console.log('Login response data:', data); // Debugging
-
       if (data.error) {
         setMessage(data.error);
       } else {
         if (data.token) {
           setMessage(data.message);
           localStorage.setItem('authToken', data.token);
-          console.log('Token set in localStorage:', data.token); // Debugging
           setAuthToken(data.token);
           navigate('/account');
         } else {
-          console.error('No token found in response data');
           setMessage('No token found in response data');
         }
       }
     } catch (err) {
-      console.error("Error during fetch:", err);
       setMessage('An error occurred. Please try again later.');
     }
   };
