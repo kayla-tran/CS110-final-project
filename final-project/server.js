@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const hbs = require('express-handlebars');
 const path = require('path');
 const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb'); // Import ObjectId from mongodb package
 const bcrypt = require('bcrypt'); // For password hashing
 const jwt = require('jsonwebtoken'); // For JWT authentication
 const cors = require('cors'); // Import cors middleware
@@ -17,13 +18,26 @@ const client = new MongoClient(uri);
 async function connectToDatabase() {
   try {
     await client.connect();
-    const db = client.db("accounts");
+    const db = client.db("test");
     app.locals.db = db;
     console.log("Connected to MongoDB");
 
     const collection = await db.listCollections().toArray();
     if (!collection.map((coll) => coll.name).includes("users")) {
       await db.createCollection("users");
+      console.log("Created users collection");
+    }
+    else
+    {
+      console.log("Users collection already exists");
+    }
+    if (!collection.map((coll) => coll.name).includes("posts")) {
+      await db.createCollection("posts");
+      console.log("Created posts collection");
+    }
+    else
+    {
+      console.log("Posts collection already exists");
     }
   } catch (err) {
     console.error("Failed to connect to MongoDB", err);
@@ -112,5 +126,70 @@ app.post('/login', async (req, res) => {
 app.get('/profile', verifyToken, (req, res) => {
   res.status(200).json({ user: req.userId });
 });
+
+app.post('/posts', verifyToken, async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const db = req.app.locals.db;
+    const posts = db.collection('posts');
+    const newPost = { userId: req.userId, title, content, createdAt: new Date() };
+
+    await posts.insertOne(newPost);
+    res.status(201).json({ message: 'Post created successfully' });
+  } catch (err) {
+    console.error("Create post error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/posts', async (req, res) => {
+  try {
+    const db = req.app.locals.db;
+    const posts = db.collection('posts');
+    const allPosts = await posts.find().toArray();
+    res.status(200).json(allPosts);
+  } catch (err) {
+    console.error("Get posts error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+// app.put('/posts/:id', verifyToken, async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { title, content } = req.body;
+//     const db = req.app.locals.db;
+//     const posts = db.collection('posts');
+
+//     const result = await posts.updateOne({ _id: ObjectId(id), userId: req.userId }, { $set: { title, content } });
+//     if (result.matchedCount === 0) {
+//       return res.status(404).json({ error: 'Post not found or not authorized' });
+//     }
+
+//     res.status(200).json({ message: 'Post updated successfully' });
+//   } catch (err) {
+//     console.error("Update post error:", err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+// app.delete('/posts/:id', verifyToken, async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const db = req.app.locals.db;
+//     const posts = db.collection('posts');
+
+//     const result = await posts.deleteOne({ _id: ObjectId(id), userId: req.userId });
+//     if (result.deletedCount === 0) {
+//       return res.status(404).json({ error: 'Post not found or not authorized' });
+//     }
+
+//     res.status(200).json({ message: 'Post deleted successfully' });
+//   } catch (err) {
+//     console.error("Delete post error:", err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
