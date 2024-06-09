@@ -7,7 +7,6 @@ import Search from './components/search/Search';
 import Account from './components/account/Account';
 import Login from './components/login/Login';
 import PostForm from './components/post/PostForm';
-import PostList from './components/post/PostList';
 import './App.css';
 
 function App() {
@@ -34,7 +33,6 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/account" element={<Account authToken={authToken} setAuthToken={setAuthToken} />} />
         <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
-        <Route path="/posts" element={<PostList />} />
         <Route path="/create-post" element={<PostForm authToken={authToken} onPostCreated={handlePostCreated} />} />
       </Routes>
     </div>
