@@ -27,6 +27,7 @@ const Login = () => {
         setMessage(data.error);
       } else {
         setMessage(data.message);
+        localStorage.setItem('authToken', data.token); // Store authentication token
         // Redirect or set authentication token, etc., based on your application flow
       }
     } catch (err) {
