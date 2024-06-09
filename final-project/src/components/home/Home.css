@@ -1,29 +1,28 @@
+
+.post-container {
+    max-height: 800px; 
+    max-width: 800px;
+    overflow-y: auto; 
+    margin: auto; /* Add this line to center horizontally */
+   
+  }
+
 .post{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
-    
-    background-color: #ffffff; /* Background color of the container */
-    border: 1px solid #ccc; /* Optional border */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 20px 20px 20px;
-    box-sizing: border-box; 
-    margin-top: 120px;
+    margin-bottom: 20px; 
+    padding: 10px; 
+    border: 1px solid #ccc;
 
 }
+.post div {
+    margin: 0; 
+  }
 
 .element{
     margin: 10px;
     padding: 20px;
-    background-color: #007bff;
-    color: white;
-    width: 100%; /* Make elements full width of container */
+    background-color: lightblue;
+    color: black;
+    width: 100%; 
     text-align: center;
 }
 
@@ -44,8 +43,23 @@
      
 }
 
+.post-img{
+    width: 200px;
+    height: 250px;
+}
 
 .chefHat{
     width: 100px;
     border-radius: 50%;
 }
+
+.bottom-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-box p{
+    text-align: left;
+} 
+
+
