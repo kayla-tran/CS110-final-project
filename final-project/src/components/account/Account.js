@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Account.css';
+import Logout from './Logout'; // Assuming Logout component is in a separate file
 
 function Account({ authToken, setAuthToken }) {
   const [user, setUser] = useState(null);
