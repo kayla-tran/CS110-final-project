@@ -1,22 +1,20 @@
+
+.post-container {
+    max-height: 800px; 
+    max-width: 800px;
+    overflow-y: auto; 
+    margin: auto; /* Add this line to center horizontally */
+   
+  }
+
 .post{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
-    
-    background-color: #ffffff; /* Background color of the container */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 20px 20px 20px;
-    box-sizing: border-box; 
-    margin-top: 120px;
+    margin-bottom: 20px; 
+    padding: 10px; 
+    border: 1px solid #ccc;
 
 }
 .post div {
-    margin: 0; /* Remove margin */
+    margin: 0; 
   }
 
 .element{
@@ -24,7 +22,7 @@
     padding: 20px;
     background-color: lightblue;
     color: black;
-    width: 100%; /* Make elements full width of container */
+    width: 100%; 
     text-align: center;
 }
 
@@ -60,6 +58,8 @@
     flex-direction: column;
 }
 
-.bottom-box p:first-of-type{
+.bottom-box p{
     text-align: left;
-}
+} 
+
+

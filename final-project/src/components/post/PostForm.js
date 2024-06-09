@@ -15,7 +15,7 @@ const PostForm = ({ authToken, onPostCreated }) => {
           'Content-Type': 'application/json',
           'Authorization': authToken,
         },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content, caption, image }), // Include all fields here
       });
       if (response.ok) {
         const post = await response.json();

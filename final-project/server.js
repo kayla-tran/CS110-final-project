@@ -154,6 +154,21 @@ app.get('/posts', async (req, res) => {
   }
 });
 
+app.post('/posts', verifyToken, async (req, res) => {
+  try {
+    const { title, content, caption, image } = req.body;
+    const db = req.app.locals.db;
+    const posts = db.collection('posts');
+    const newPost = { userId: req.userId, title, content, caption, image, createdAt: new Date() };
+
+    await posts.insertOne(newPost);
+    res.status(201).json(newPost); // Return the newly created post
+  } catch (err) {
+    console.error("Create post error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 // app.put('/posts/:id', verifyToken, async (req, res) => {
 //   try {
