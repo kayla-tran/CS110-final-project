@@ -70,6 +70,7 @@ import chefHat from '../../assets/chefHat.jpeg';
         console.error('Error fetching posts:', err);
       }
     };
+    
   
     useEffect(() => {
       fetchPosts();
@@ -80,7 +81,7 @@ import chefHat from '../../assets/chefHat.jpeg';
   
 
   return (
-    <div>
+    <div className="post-container">
       {posts.map((post) => (
         <div key={post._id} className="post">
           <div className="element">
