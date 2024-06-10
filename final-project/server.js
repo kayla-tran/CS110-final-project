@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -50,6 +50,7 @@ function verifyToken(req, res, next) {
       return res.status(401).json({ error: 'Failed to authenticate token' });
     }
     req.userId = decoded.userId;
+    req.username = decoded.username; // Add username to request object
     next();
   });
 }
@@ -86,7 +87,7 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
-    const token = jwt.sign({ userId: user._id }, 'your_secret_key');
+    const token = jwt.sign({ userId: user._id, username: user.username }, 'your_secret_key');
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     console.error("Login error:", err);
@@ -95,28 +96,63 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  // Here you can implement token invalidation logic if using a token blacklist
   res.status(200).json({ message: 'Logout successful' });
 });
 
-app.get('/profile', verifyToken, (req, res) => {
-  res.status(200).json({ user: req.userId });
+app.get('/account', async (req, res) => {
+  try {
+    const db = req.app.locals.db;
+    const users = db.collection('users');
+    const user = await users.findOne(
+      { _id: new ObjectId(req.userId) },
+      { projection: { _id: 1, username: 1 } } // Include only _id and username fields
+    );
+    
+    if (user) {
+      // Include the username field in the response
+      res.status(200).json({ _id: user._id, username: user.username });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    console.error("Profile error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
+
+
 
 app.post('/posts', verifyToken, async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, caption, image } = req.body;
     const db = req.app.locals.db;
+    const users = db.collection('users');
     const posts = db.collection('posts');
-    const newPost = { userId: req.userId, title, content, createdAt: new Date() };
+    
+    // Fetch the username associated with the userId
+    const user = await users.findOne({ _id: new MongoClient.ObjectId(req.userId) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const newPost = {
+      userId: req.userId,
+      username: user.username, // Add username to the new post
+      title,
+      content,
+      caption,
+      image,
+      createdAt: new Date(),
+    };
 
     await posts.insertOne(newPost);
-    res.status(201).json({ message: 'Post created successfully' });
+    res.status(201).json({ message: 'Post created successfully', post: newPost });
   } catch (err) {
     console.error("Create post error:", err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 app.get('/posts', async (req, res) => {
   try {
