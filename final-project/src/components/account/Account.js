@@ -19,7 +19,8 @@ function Account({ authToken, setAuthToken }) {
         const data = await response.json();
         if (data.user) {
           setUser(data.user);
-          setUsername(data.username);
+          console.log(data.user.username); 
+          setUsername(data.user.username); // this is incorrect, it only gets the userID not username for some reason
         } else {
           navigate('/login');
         }

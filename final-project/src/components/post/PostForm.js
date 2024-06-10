@@ -13,13 +13,13 @@ const PostForm = ({ authToken, onPostCreated }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': authToken,
+          'Authorization': `Bearer ${authToken}`,
         },
-        body: JSON.stringify({ title, content, caption, image }), // Include all fields here
+        body: JSON.stringify({ title, content, caption, image }),
       });
       if (response.ok) {
         const post = await response.json();
-        onPostCreated(post);
+        onPostCreated(post.post);
         setTitle('');
         setContent('');
         setCaption('');
@@ -30,7 +30,7 @@ const PostForm = ({ authToken, onPostCreated }) => {
     } catch (err) {
       console.error('Error:', err);
     }
-  };
+  };  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -47,21 +47,17 @@ const PostForm = ({ authToken, onPostCreated }) => {
         onChange={(e) => setContent(e.target.value)}
         required
       ></textarea>
-
-        <input
-        type="text"
-        placeholder="Caption"
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        required
-      />
       <input
         type="text"
         placeholder="Image URL"
         value={image}
-        onChange={(e) => setImage(e.target.value)}
+        onChange={(e) => {
+          console.log("New image value:", e.target.value);
+          setImage(e.target.value);
+        }}
         required
       />
+
       <button type="submit">Create Post</button>
     </form>
   );
