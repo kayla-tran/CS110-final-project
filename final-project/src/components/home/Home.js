@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
 import chefHat from '../../assets/chefHat.jpeg';
+//tbd is we need this
+import PostForm from '../post/PostForm.js';
 
 // const Home = () => {
 //   const [posts, setPosts] = useState([]);
@@ -56,7 +58,7 @@ import chefHat from '../../assets/chefHat.jpeg';
   //     ))}
   //   </div>
   // );
-  const Home = () => {
+  const Home = ({ username}) => {
     const [posts, setPosts] = useState([]);
   
     const fetchPosts = async () => {

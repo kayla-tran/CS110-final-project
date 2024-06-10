@@ -10,8 +10,7 @@
 .post{
     margin-bottom: 20px; 
     padding: 10px; 
-    border: 1px solid #ccc;
-
+    max-width: 700px;
 }
 .post div {
     margin: 0; 

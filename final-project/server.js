@@ -39,20 +39,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  if (!token) {
-    return res.status(403).json({ error: 'No token provided' });
-  }
-
-  jwt.verify(token, 'your_secret_key', (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Failed to authenticate token' });
-    }
-    req.userId = decoded.userId;
-    next();
-  });
-}
 
 app.post('/register', async (req, res) => {
   try {
@@ -86,8 +72,7 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
-    const token = jwt.sign({ userId: user._id }, 'your_secret_key');
-    res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ message: 'Login successful'});
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: 'Internal server error' });
@@ -95,20 +80,32 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  // Here you can implement token invalidation logic if using a token blacklist
   res.status(200).json({ message: 'Logout successful' });
 });
 
-app.get('/profile', verifyToken, (req, res) => {
-  res.status(200).json({ user: req.userId });
+app.get('/profile', async (req, res) => {
+  try {
+    const db = req.app.locals.db;
+    const users = db.collection('users');
+    const user = await users.findOne({ _id: new MongoClient.ObjectId(req.userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ user: req.userId, username: user.username });
+  } catch (err) {
+    console.error("Profile error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
-app.post('/posts', verifyToken, async (req, res) => {
+app.post('/posts', async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, image } = req.body;
     const db = req.app.locals.db;
     const posts = db.collection('posts');
-    const newPost = { userId: req.userId, title, content, createdAt: new Date() };
+    const newPost = { userId: req.userId, title, content, image, createdAt: new Date() };
 
     await posts.insertOne(newPost);
     res.status(201).json({ message: 'Post created successfully' });

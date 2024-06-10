@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const Login = ({ setAuthToken }) => {
+const Login = ({  }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isRegister, setIsRegister] = useState(false);
@@ -25,14 +25,10 @@ const Login = ({ setAuthToken }) => {
       if (data.error) {
         setMessage(data.error);
       } else {
-        if (data.token) {
+        
           setMessage(data.message);
-          localStorage.setItem('authToken', data.token);
-          setAuthToken(data.token);
           navigate('/account');
-        } else {
-          setMessage('No token found in response data');
-        }
+        
       }
     } catch (err) {
       setMessage('An error occurred. Please try again later.');
@@ -49,6 +45,7 @@ const Login = ({ setAuthToken }) => {
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+           autoComplete="username"
           required
         />
         <br />
@@ -58,6 +55,7 @@ const Login = ({ setAuthToken }) => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete={isRegister ? "new-password" : "current-password"}
           required
         />
         <br />

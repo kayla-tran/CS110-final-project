@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const PostForm = ({ authToken, onPostCreated }) => {
-  const [title, setTitle] = useState('');
+const PostForm = ({ username, onPostCreated }) => {
+  //const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [caption, setCaption] = useState('');
   const [image, setImage] = useState('');
@@ -13,14 +13,14 @@ const PostForm = ({ authToken, onPostCreated }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': authToken,
+          
         },
-        body: JSON.stringify({ title, content, caption, image }), // Include all fields here
+        body: JSON.stringify({ username, content, caption, image }), // Include all fields here
       });
       if (response.ok) {
         const post = await response.json();
         onPostCreated(post);
-        setTitle('');
+        // setTitle('');
         setContent('');
         setCaption('');
         setImage('');
@@ -34,15 +34,16 @@ const PostForm = ({ authToken, onPostCreated }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      {/* <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
-      />
+      /> */}
+      <p>Posting as: <strong>{username}</strong></p>
       <textarea
-        placeholder="Content"
+        placeholder="Recipe"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         required
