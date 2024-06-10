@@ -39,21 +39,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  if (!token) {
-    return res.status(403).json({ error: 'No token provided' });
-  }
-
-  jwt.verify(token, 'your_secret_key', (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Failed to authenticate token' });
-    }
-    req.userId = decoded.userId;
-    req.username = decoded.username; // Add username to request object
-    next();
-  });
-}
 
 app.post('/register', async (req, res) => {
   try {
@@ -87,8 +72,9 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
-    const token = jwt.sign({ userId: user._id, username: user.username }, 'your_secret_key');
-    res.status(200).json({ message: 'Login successful', token });
+
+    res.status(200).json({ message: 'Login successful'});
+
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: 'Internal server error' });
@@ -99,21 +85,19 @@ app.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
 
-app.get('/account', async (req, res) => {
+
+app.get('/profile', async (req, res) => {
   try {
     const db = req.app.locals.db;
     const users = db.collection('users');
-    const user = await users.findOne(
-      { _id: new ObjectId(req.userId) },
-      { projection: { _id: 1, username: 1 } } // Include only _id and username fields
-    );
-    
-    if (user) {
-      // Include the username field in the response
-      res.status(200).json({ _id: user._id, username: user.username });
-    } else {
-      res.status(404).json({ error: 'User not found' });
+    const user = await users.findOne({ _id: new MongoClient.ObjectId(req.userId) });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
+
+    res.status(200).json({ user: req.userId, username: user.username });
+
   } catch (err) {
     console.error("Profile error:", err);
     res.status(500).json({ error: 'Internal server error' });
@@ -121,29 +105,16 @@ app.get('/account', async (req, res) => {
 });
 
 
-
-app.post('/posts', verifyToken, async (req, res) => {
+app.post('/posts', async (req, res) => {
   try {
-    const { title, content, caption, image } = req.body;
+    const { title, content, image } = req.body;
+
     const db = req.app.locals.db;
     const users = db.collection('users');
     const posts = db.collection('posts');
-    
-    // Fetch the username associated with the userId
-    const user = await users.findOne({ _id: new MongoClient.ObjectId(req.userId) });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
 
-    const newPost = {
-      userId: req.userId,
-      username: user.username, // Add username to the new post
-      title,
-      content,
-      caption,
-      image,
-      createdAt: new Date(),
-    };
+    const newPost = { userId: req.userId, title, content, image, createdAt: new Date() };
+
 
     await posts.insertOne(newPost);
     res.status(201).json({ message: 'Post created successfully', post: newPost });

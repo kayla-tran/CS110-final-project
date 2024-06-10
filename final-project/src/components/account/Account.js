@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Account.css';
 
-function Account({ authToken, setAuthToken }) {
+function Account() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState(null);
   const navigate = useNavigate();
@@ -13,14 +13,15 @@ function Account({ authToken, setAuthToken }) {
         const response = await fetch('http://localhost:8080/profile', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`
           }
         });
         const data = await response.json();
         if (data.user) {
           setUser(data.user);
-          console.log(data.user.username); 
-          setUsername(data.user.username); // this is incorrect, it only gets the userID not username for some reason
+
+          setUsername(data.username);
+          // console.log(username);
+
         } else {
           navigate('/login');
         }
@@ -29,18 +30,20 @@ function Account({ authToken, setAuthToken }) {
       }
     };
 
-    if (authToken) {
-      fetchUserData(authToken);
-    } else {
+    
       navigate('/login');
+    
+  }, [navigate]);
+
+  useEffect(() => {
+    if (username) {
+      console.log(username); // Log username after it has been updated
     }
-  }, [authToken, navigate]);
+  }, [username]);
 
   const handleLogout = async () => {
     try {
       await fetch('http://localhost:8080/logout', { method: 'POST' });
-      localStorage.removeItem('authToken');
-      setAuthToken(null);
       navigate('/login');
     } catch (error) {
       console.error('Logout error:', error);
@@ -53,7 +56,7 @@ function Account({ authToken, setAuthToken }) {
 
   return (
     <div className="account-container">
-      <h1>Welcome to your account, {user}</h1>
+      <h1>Welcome to your account, {username}</h1>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
