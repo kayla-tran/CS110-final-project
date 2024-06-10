@@ -27,6 +27,10 @@ const Login = ({  }) => {
       } else {
         
           setMessage(data.message);
+
+          console.log('Logged in with username:', username);
+          console.log('Password:', password);
+
           navigate('/account');
         
       }
