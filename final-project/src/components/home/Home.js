@@ -3,7 +3,7 @@ import './Home.css';
 import chefHat from '../../assets/chefHat.jpeg';
 
 
-  const Home = ({ username}) => {
+  const Home = ({ username }) => {
     const [posts, setPosts] = useState([]);
   
     const fetchPosts = async () => {
