@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const PostForm = ({ username, onPostCreated }) => {
-  //const [title, setTitle] = useState('');
+  const [username, setUsername] = useState('');
   const [content, setContent] = useState('');
   const [caption, setCaption] = useState('');
   const [image, setImage] = useState('');
@@ -21,6 +21,7 @@ const PostForm = ({ username, onPostCreated }) => {
         const post = await response.json();
         onPostCreated(post);
         // setTitle('');
+        setUsername(username);
         setContent('');
         setCaption('');
         setImage('');
