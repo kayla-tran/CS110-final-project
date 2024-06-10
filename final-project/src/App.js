@@ -7,6 +7,7 @@ import Search from './components/search/Search';
 import Account from './components/account/Account';
 import Login from './components/login/Login';
 import PostForm from './components/post/PostForm';
+
 import './App.css';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/account" element={<Account  />} />
         <Route path="/login" element={<Login  />} />
         <Route path="/create-post" element={<PostForm onPostCreated={handlePostCreated} />} />
+
       </Routes>
     </div>
   );
