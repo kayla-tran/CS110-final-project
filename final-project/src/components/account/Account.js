@@ -18,8 +18,10 @@ function Account() {
         const data = await response.json();
         if (data.user) {
           setUser(data.user);
+
           setUsername(data.username);
           // console.log(username);
+
         } else {
           navigate('/login');
         }

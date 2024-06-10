@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -72,7 +72,9 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid username or password' });
     }
 
+
     res.status(200).json({ message: 'Login successful'});
+
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: 'Internal server error' });
@@ -82,6 +84,7 @@ app.post('/login', async (req, res) => {
 app.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
+
 
 app.get('/profile', async (req, res) => {
   try {
@@ -94,26 +97,33 @@ app.get('/profile', async (req, res) => {
     }
 
     res.status(200).json({ user: req.userId, username: user.username });
+
   } catch (err) {
     console.error("Profile error:", err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+
 app.post('/posts', async (req, res) => {
   try {
     const { title, content, image } = req.body;
+
     const db = req.app.locals.db;
+    const users = db.collection('users');
     const posts = db.collection('posts');
+
     const newPost = { userId: req.userId, title, content, image, createdAt: new Date() };
 
+
     await posts.insertOne(newPost);
-    res.status(201).json({ message: 'Post created successfully' });
+    res.status(201).json({ message: 'Post created successfully', post: newPost });
   } catch (err) {
     console.error("Create post error:", err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 app.get('/posts', async (req, res) => {
   try {

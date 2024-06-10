@@ -13,6 +13,7 @@ const PostForm = ({ username, onPostCreated }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+
           
         },
         body: JSON.stringify({ username, content, caption, image }), // Include all fields here
@@ -21,6 +22,7 @@ const PostForm = ({ username, onPostCreated }) => {
         const post = await response.json();
         onPostCreated(post);
         // setTitle('');
+
         setContent('');
         setCaption('');
         setImage('');
@@ -30,7 +32,7 @@ const PostForm = ({ username, onPostCreated }) => {
     } catch (err) {
       console.error('Error:', err);
     }
-  };
+  };  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -48,21 +50,17 @@ const PostForm = ({ username, onPostCreated }) => {
         onChange={(e) => setContent(e.target.value)}
         required
       ></textarea>
-
-        <input
-        type="text"
-        placeholder="Caption"
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        required
-      />
       <input
         type="text"
         placeholder="Image URL"
         value={image}
-        onChange={(e) => setImage(e.target.value)}
+        onChange={(e) => {
+          console.log("New image value:", e.target.value);
+          setImage(e.target.value);
+        }}
         required
       />
+
       <button type="submit">Create Post</button>
     </form>
   );
