@@ -39,6 +39,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
+app.post('/auth/google', async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log('Received email:', email);
+    // Perform authentication logic here, then send response
+    res.status(200).json({ message: 'Authentication successful', email });
+  } catch (err) {
+    console.error("Google OAuth error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 app.post('/register', async (req, res) => {
   try {
