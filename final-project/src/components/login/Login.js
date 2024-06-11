@@ -37,6 +37,7 @@ const Login = ({onLogin}) => {
         }
 
         onLogin(userEmail);
+        navigate('/profile');
     }
 
     const handleSubmit = async (e) => {
@@ -61,7 +62,8 @@ const Login = ({onLogin}) => {
           console.log('Logged in with username:', username);
           console.log('Password:', password);
 
-          navigate('/account');
+          onLogin(username);
+          navigate('/profile');
         
       }
     } catch (err) {
