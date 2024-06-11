@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const PostForm = ({ username, onPostCreated }) => {
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
   const [content, setContent] = useState('');
   const [caption, setCaption] = useState('');
   const [image, setImage] = useState('');
@@ -19,9 +19,9 @@ const PostForm = ({ username, onPostCreated }) => {
       });
       if (response.ok) {
         const post = await response.json();
-        onPostCreated(post);
+        // onPostCreated(post);
         // setTitle('');
-        setUsername(username);
+        setUserName(username);
         setContent('');
         setCaption('');
         setImage('');
@@ -31,17 +31,13 @@ const PostForm = ({ username, onPostCreated }) => {
     } catch (err) {
       console.error('Error:', err);
     }
+
+    console.log( username, content, caption, image)
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      /> */}
+      
       <p>Posting as: <strong>{username}</strong></p>
       <textarea
         placeholder="Recipe"

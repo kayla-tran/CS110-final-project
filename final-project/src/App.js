@@ -19,7 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/" element={<Home username={loggedInUser} />} />
+        
         <Route path="/trending" element={<Trending />} />
         <Route path="/search" element={<Search />} />
         <Route path="/account" element={<Account  />} />
@@ -33,6 +33,7 @@ function App() {
           path="/create-post"
           element={<PostForm username={loggedInUser} />}
         />
+        <Route path="/" element={<Home username={loggedInUser} />} />
       </Routes>
     </div>
   );
