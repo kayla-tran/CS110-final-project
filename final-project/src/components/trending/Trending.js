@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Trending.css';
 import chefHat from '../../assets/chefHat.jpeg';
 
-const Trending = () => {
+const Trending = ({username}) => {
   const [trendingPosts, setTrendingPosts] = useState([]);
 
   const fetchTrendingPosts = async () => {
@@ -43,7 +43,7 @@ const Trending = () => {
                 <img src={chefHat} className="chefHat" alt="Chef Hat" />
               </div>
               <div>
-                <h3>{post.userName ?? 'Unknown User'}</h3>
+                <h3>{post.username ?? 'Unknown User'}</h3>
               </div>
               <div>
                 <p>{new Date(post.createdAt).toLocaleString() ?? 'Unknown Date'}</p>
