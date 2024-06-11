@@ -23,8 +23,8 @@ async function connectToDatabase() {
       await db.createCollection("users");
       console.log("Created users collection");
     }
-    if (!collections.map(coll => coll.name).includes("posts")) {
-      await db.createCollection("posts");
+    if (!collections.map(coll => coll.name).includes("posts2")) {
+      await db.createCollection("posts2");
       console.log("Created posts collection");
     }
   } catch (err) {
@@ -117,16 +117,34 @@ app.get('/profile', async (req, res) => {
 });
 
 
+// app.post('/posts', async (req, res) => {
+//   try {
+//     const { username, content, image, caption} = req.body;
+
+//     const db = req.app.locals.db;
+//     // const users = db.collection('users');
+//     const posts = db.collection('posts');
+
+//     const newPost = { username, content, image, caption, createdAt: new Date() };
+
+
+//     await posts.insertOne(newPost);
+//     res.status(201).json({ message: 'Post created successfully', post: newPost });
+//   } catch (err) {
+//     console.error("Create post error:", err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+
 app.post('/posts', async (req, res) => {
   try {
-    const { title, content, image } = req.body;
+    const { username, content, image, caption } = req.body || {};
 
     const db = req.app.locals.db;
-    const users = db.collection('users');
-    const posts = db.collection('posts');
+    const posts = db.collection('posts2');
 
-    const newPost = { userId: req.userId, title, content, image, createdAt: new Date() };
-
+    const newPost = { username, content, image, caption, createdAt: new Date() };
 
     await posts.insertOne(newPost);
     res.status(201).json({ message: 'Post created successfully', post: newPost });
@@ -140,7 +158,7 @@ app.post('/posts', async (req, res) => {
 app.get('/posts', async (req, res) => {
   try {
     const db = req.app.locals.db;
-    const posts = db.collection('posts');
+    const posts = db.collection('posts2');
     const allPosts = await posts.find().toArray();
     res.status(200).json(allPosts);
   } catch (err) {

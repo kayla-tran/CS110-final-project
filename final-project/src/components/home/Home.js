@@ -5,7 +5,10 @@ import chefHat from '../../assets/chefHat.jpeg';
 
   const Home = ({ username }) => {
     const [posts, setPosts] = useState([]);
-  
+    // const [userName, setUserName] = useState('');
+
+    // setUserName(username);
+
     const fetchPosts = async () => {
       try {
         const response = await fetch('http://localhost:8080/posts');
@@ -21,10 +24,7 @@ import chefHat from '../../assets/chefHat.jpeg';
   
     useEffect(() => {
       fetchPosts();
-      //const intervalId = setInterval(fetchPosts, 5000); // Fetch posts every 5 seconds
-  
-      //return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }, []);
+     }, []);
   
 
   return (
