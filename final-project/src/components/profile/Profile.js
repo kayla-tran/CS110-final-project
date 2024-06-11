@@ -27,11 +27,10 @@ const Profile = ({ username }) => {
       <div className="post-container">
         {userPosts.length > 0 ? (
           userPosts.map((post) => (
-            <div key={post._id} className="post">
-              {/* Render your post content here */}
-              {/* Example: */}
+            <div key={post._id} className="post" style={{ background: '#61dafb', margin: '20px' }}>
               <h3>{post.caption}</h3>
               <p>{post.content}</p>
+              <img src={post.image} alt="Post" className="post-img" />
             </div>
           ))
         ) : (
