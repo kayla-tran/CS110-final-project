@@ -173,6 +173,18 @@ app.post('/posts/:postId/comments', async (req, res) => {
   }
 });
 
+app.get('/posts/:postId/comments', async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const comments = await getCommentsForPost(postId);
+
+    res.status(200).json(comments); // Replace comments with the actual comments fetched from the database
+  } catch (err) {
+    console.error("Error fetching comments:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 
 app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
