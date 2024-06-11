@@ -7,7 +7,7 @@ import Search from './components/search/Search';
 import Account from './components/account/Account';
 import Login from './components/login/Login';
 import PostForm from './components/post/PostForm';
-
+import Profile from './components/profile/Profile';
 
 import './App.css';
 
@@ -35,7 +35,7 @@ function App() {
           element={<PostForm username={loggedInUser} />}
         />
         <Route path="/" element={<Home username={loggedInUser} />} />
-        <Route path="*" element={<Login />} />  {/* Redirect all unknown paths to Login */}
+        <Route path="/profile" element={<Profile username={loggedInUser}  />} />
 
       </Routes>
     </div>
