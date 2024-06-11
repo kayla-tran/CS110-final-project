@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { app } from '../../firebase';
 import './Login.css';
 
-const Login = ({}) => {
+const Login = ({onLogin}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isRegister, setIsRegister] = useState(false);
@@ -35,6 +35,8 @@ const Login = ({}) => {
         catch (error) {
             console.log(error);
         }
+
+        onLogin(userEmail);
     }
 
     const handleSubmit = async (e) => {
@@ -49,17 +51,24 @@ const Login = ({}) => {
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
-            if (data.error) {
-                setMessage(data.error);
-            } else {
-                setMessage(data.message);
-                navigate('/account');
-            }
-        } catch (err) {
-            setMessage('An error occurred. Please try again later.');
-        }
-    };
+      const data = await response.json();
+      if (data.error) {
+        setMessage(data.error);
+      } else {
+        
+          setMessage(data.message);
+
+          console.log('Logged in with username:', username);
+          console.log('Password:', password);
+
+          navigate('/account');
+        
+      }
+    } catch (err) {
+      setMessage('An error occurred. Please try again later.');
+    }
+    onLogin(username);
+  };
 
     return (
         <div className="login-container">

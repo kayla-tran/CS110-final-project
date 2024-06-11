@@ -12,22 +12,28 @@ import './App.css';
 
 function App() {
 
-  const handlePostCreated = (newPost) => {
-    // Optionally update the post list when a new post is created
-    console.log('Post created:', newPost);
-  };
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   return (
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        
         <Route path="/trending" element={<Trending />} />
         <Route path="/search" element={<Search />} />
         <Route path="/account" element={<Account  />} />
-        <Route path="/login" element={<Login  />} />
-        <Route path="/create-post" element={<PostForm onPostCreated={handlePostCreated} />} />
-
+        {/* <Route path="/login" element={<Login  />} />
+        <Route path="/create-post" element={<PostForm onPostCreated={handlePostCreated} />} /> */}
+        <Route
+          path="/login"
+          element={<Login onLogin={(username) => setLoggedInUser(username)} />}
+        />
+        <Route
+          path="/create-post"
+          element={<PostForm username={loggedInUser} />}
+        />
+        <Route path="/" element={<Home username={loggedInUser} />} />
       </Routes>
     </div>
   );
