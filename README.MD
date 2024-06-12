@@ -23,3 +23,5 @@ Are you ready to become a member of RecipeShare? To get started, just take these
 3. **Share Your Creations**
 
 4. **Engage with the Community**
+
+See README inside of final-project for images and instructions on how to run!
