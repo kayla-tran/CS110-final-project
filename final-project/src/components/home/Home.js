@@ -13,6 +13,8 @@ const Home = ({ username }) => {
     try {
       const response = await fetch('http://localhost:8080/posts');
       const posts = await response.json();
+      posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
       console.log('Fetched posts:', posts); // Debug log
       // Initialize showComments state for each post
       const initialShowComments = {};
