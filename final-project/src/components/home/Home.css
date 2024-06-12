@@ -97,12 +97,16 @@ body {
     margin-top: 10px;
     display: flex;
     gap: 10px;
+    
+    background-color: rgba(209, 229, 245, 0.482);
   }
   
   .comment {
-    border-top: 1px rgba(209, 229, 245, 0.576);
-    padding-top: 10px;
-    margin-top: 10px;
+    display: flex; 
+    align: flex-start;
+    border-color: rgba(209, 229, 245, 0.436);
+    background-color: rgba(209, 229, 245, 0.482);
+    padding-left:2%;
   }
 
   .barButton.comment {
@@ -120,6 +124,7 @@ body {
   }
   
   .comments{
+    margin-left: 10%;
     /* border-color: rgba(209, 229, 245, 0.436); */
     background-color: rgb(236, 242, 247);
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1); /* Increase spread radius for a more fuzzy shadow */
@@ -138,7 +143,5 @@ body {
   }
 
   .comment-container{
-    border:solid;
-    border-color: rgba(209, 229, 245, 0.436);
-    background-color: rgba(209, 229, 245, 0.482);
+    padding-left: 10%;
   }
