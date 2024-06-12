@@ -12,12 +12,12 @@ const CommentForm = ({ postId, fetchPosts, username }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, message }), // Only include the message field
+        body: JSON.stringify({ user: username, message }), // Only include the message field
       });
 
       if (response.ok) {
         fetchPosts(); // Refresh posts after adding a new comment
-        setUserName(username);
+        //setUserName(username);
         setMessage(''); // Clear the message field after submission
       } else {
         console.error('Failed to add comment');
