@@ -37,8 +37,8 @@ async function connectToDatabase() {
       await db.createCollection("users");
       console.log("Created users collection");
     }
-    if (!collections.map(coll => coll.name).includes("posts4")) {
-      await db.createCollection("posts4");
+    if (!collections.map(coll => coll.name).includes("posts3")) {
+      await db.createCollection("posts3");
       console.log("Created posts collection");
     }
   } catch (err) {
@@ -113,7 +113,7 @@ app.post('/posts', async (req, res) => {
   try {
     const { username, content, image, caption } = req.body || {};
     const db = req.app.locals.db;
-    const posts = db.collection('posts4');
+    const posts = db.collection('posts3');
     const newPost = { 
       username, 
       content, 
@@ -134,7 +134,7 @@ app.post('/posts', async (req, res) => {
 app.get('/posts', async (req, res) => {
   try {
     const db = req.app.locals.db;
-    const posts = db.collection('posts4');
+    const posts = db.collection('posts3');
     const allPosts = await posts.find().toArray();
     res.status(200).json(allPosts);
   } catch (err) {
@@ -148,17 +148,19 @@ app.get('/posts', async (req, res) => {
 app.post('/posts/:postId/comments', async (req, res) => {
   try {
     const { postId } = req.params;
-    const { user, message } = req.body;
+    const { user, content, caption, image, comments } = req.body;
     const db = req.app.locals.db;
-    const posts = db.collection('posts4');
-    const comment = { 
-      user, 
-      message, 
-      time: new Date()
+    const posts = db.collection('posts3');
+    const comment = {
+      user,
+      content,
+      caption,
+      image,
+      comments: comments || [], // Initialize comments array if not provided
     };
 
     const result = await posts.updateOne(
-      { _id: new MongoClient.ObjectId(postId) }, 
+      { _id: new ObjectId(postId) },
       { $push: { comments: comment } }
     );
 
@@ -173,17 +175,6 @@ app.post('/posts/:postId/comments', async (req, res) => {
   }
 });
 
-app.get('/posts/:postId/comments', async (req, res) => {
-  try {
-    const { postId } = req.params;
-    const comments = await getCommentsForPost(postId);
-
-    res.status(200).json(comments); // Replace comments with the actual comments fetched from the database
-  } catch (err) {
-    console.error("Error fetching comments:", err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 
 

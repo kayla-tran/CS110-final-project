@@ -1,43 +1,57 @@
-// CommentForm.jsx
 import React, { useState } from 'react';
 
 const CommentForm = ({ postId, fetchPosts, username }) => {
-  const [newComment, setNewComment] = useState('');
+  const [content, setContent] = useState('');
+  const [caption, setCaption] = useState('');
+  const [image, setImage] = useState('');
 
-  const handleCommentChange = (e) => {
-    setNewComment(e.target.value);
-  };
-
-  const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
     try {
-        const currentTime = new Date().toISOString();
       const response = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: username, message: newComment, time: currentTime }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user: username, content, caption, image, comments: [] }),
       });
 
       if (response.ok) {
-        fetchPosts(); // Refresh posts after adding comment
-        setNewComment(''); // Clear comment input
+        fetchPosts(); // Refresh posts after adding a new comment
+        setContent(''); // Clear comment input
+        setCaption(''); // Clear caption input
+        setImage(''); // Clear image input
       } else {
-        console.error('Error adding comment:', response.statusText);
+        console.error('Failed to add comment');
       }
     } catch (err) {
-      console.error('Error adding comment:', err);
+      console.error('Error:', err);
     }
   };
 
   return (
-    <div className="comment-form">
+    <form onSubmit={handleCommentSubmit}>
+      <p>Posting as: <strong>{username}</strong></p>
+      <textarea
+        placeholder="Add your comment"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        required
+      ></textarea>
       <input
         type="text"
-        placeholder="Add a comment"
-        value={newComment}
-        onChange={handleCommentChange}
+        placeholder="Caption"
+        value={caption}
+        onChange={(e) => setCaption(e.target.value)}
       />
-      <button onClick={handleCommentSubmit}>Submit</button>
-    </div>
+      <input
+        type="text"
+        placeholder="Image URL"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+      />
+      <button type="submit">Submit Comment</button>
+    </form>
   );
 };
 
