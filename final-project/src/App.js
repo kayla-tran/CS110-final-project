@@ -21,8 +21,8 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
         
-        <Route path="/trending" element={<Trending />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/trending" element={<Trending username={loggedInUser}/>} />
+        <Route path="/search" element={<Search username={loggedInUser}/>} />
         <Route path="/account" element={<Account  />} />
         {/* <Route path="/login" element={<Login  />} />
         <Route path="/create-post" element={<PostForm onPostCreated={handlePostCreated} />} /> */}

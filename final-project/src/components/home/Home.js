@@ -42,6 +42,10 @@ const Home = ({ username }) => {
 
   return (
     <div className="post-container">
+      <header>
+        <h1>Home</h1>
+        <p>View all recipes!</p>
+      </header>
       <p></p>
       {posts.map((post) => (
         <div key={post._id} className="post">
