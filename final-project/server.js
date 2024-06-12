@@ -10,10 +10,14 @@ const port = process.env.PORT || 8080;
 const uri = "mongodb+srv://kelseymoose346:opZ67GDDM8cB9gkB@fyp.b3mredm.mongodb.net/?retryWrites=true&w=majority&appName=FYP";
 const client = new MongoClient(uri);
 
+app.use(cors({
+  origin: 'http://localhost:3000', // Adjust based on your frontend
+  credentials: true // Allow cookies to be sent with requests
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors());
 
 app.use(session({
   secret: 'secret-key-1234567890',
@@ -82,6 +86,10 @@ app.post('/login', async (req, res) => {
     }
 
     req.session.user = { username: user.username };
+    
+    console.log('Session user:', req.session.user);
+    console.log('Session:', req.session);
+
     res.status(200).json({ message: 'Login successful' });
   } catch (err) {
     console.error("Login error:", err);
@@ -110,6 +118,7 @@ app.get('/profile', (req, res) => {
 
 app.put('/profile', async (req, res) => {
   try {
+    console.log('Session for update:', req.session);
     if (!req.session.user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
