@@ -45,63 +45,19 @@ const Profile = ({ username }) => {
 
 
 
-  const handleUsernameUpdate = async () => {
+  const handleDeletePost = async (postId) => {
     try {
-      const response = await fetch('http://localhost:8080/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cookie': document.cookie 
-        },
-        body: JSON.stringify({ newUsername }),
+      const response = await fetch(`http://localhost:8080/profile/posts/${postId}`, {
+        method: 'DELETE'
       });
       if (response.ok) {
-        setNewUsername('');
-        // Ideally, you would update the username in the parent component and pass it down as a prop
-        fetchUserData();
-        window.location.reload();
+        // Remove the deleted post from the userPosts state
+        setUserPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
       } else {
-        console.error('Failed to update username');
+        console.error('Failed to delete post');
       }
     } catch (err) {
-      console.error('Error updating username:', err);
-    }
-  };
-
-  const handlePasswordUpdate = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cookie': document.cookie 
-        },
-        body: JSON.stringify({ currentPassword, newPassword }),
-      });
-      if (response.ok) {
-        setCurrentPassword('');
-        setNewPassword('');
-        fetchUserData();
-      } else {
-        console.error('Failed to update password');
-      }
-    } catch (err) {
-      console.error('Error updating password:', err);
-    }
-  };
-
-  const fetchUserData = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/profile');
-      if (response.ok) {
-        const userData = await response.json();
-        // Update UI with new user data
-        setUsername(userData.username);
-      } else {
-        console.error('Failed to fetch user data');
-      }
-    } catch (err) {
-      console.error('Error fetching user data:', err);
+      console.error('Error deleting post:', err);
     }
   };
 
@@ -156,39 +112,12 @@ const Profile = ({ username }) => {
                   <CommentForm postId={post._id} fetchPosts={fetchUserPosts} username={username} />
                 </div>
               )}
+              <button onClick={() => handleDeletePost(post._id)}>Delete</button>
             </div>
           ))
         ) : (
           <p>No posts found for {username}.</p>
         )}
-      </div>
-
-      <div className="update-section">
-        <h2>Update Username</h2>
-        <input
-          type="text"
-          value={newUsername}
-          onChange={(e) => setNewUsername(e.target.value)}
-          placeholder="New Username"
-        />
-        <button onClick={handleUsernameUpdate}>Update Username</button>
-      </div>
-
-      <div className="update-section">
-        <h2>Update Password</h2>
-        <input
-          type="password"
-          value={currentPassword}
-          onChange={(e) => setCurrentPassword(e.target.value)}
-          placeholder="Current Password"
-        />
-        <input
-          type="password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="New Password"
-        />
-        <button onClick={handlePasswordUpdate}>Update Password</button>
       </div>
 
 
