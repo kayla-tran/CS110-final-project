@@ -4,7 +4,7 @@ import CommentForm from '../commentForm/CommentForm';
 import chefHat from '../../assets/chefHat.jpeg';
 
 
-function Search() {
+function Search({ username }) {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [usernameQuery, setUsernameQuery] = useState('');
@@ -126,7 +126,7 @@ function Search() {
                  ) : (
                    <p>No comments yet.</p>
                  )}
-                 <CommentForm postId={post._id} fetchPosts={post.fetchPosts} username={post.username} /> 
+                 <CommentForm postId={post._id} fetchPosts={post.fetchPosts} username={username} /> 
                </div>
              )}
            </div>
