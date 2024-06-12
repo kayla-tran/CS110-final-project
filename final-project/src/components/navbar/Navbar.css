@@ -31,6 +31,8 @@ a:hover {
   flex-direction: row;
   justify-content: space-between; /* Add this to push left and right sections apart */
   width: 100%; /* Ensure the content spans the full width */
+  padding-left: 0.5%;
+  padding-right: 0.5%;
 }
 
 .barButton {

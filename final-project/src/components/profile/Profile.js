@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../home/Home.css';
 import '../post/Post.css';
+import './Profile.css';
 import CommentForm from '../commentForm/CommentForm';
 import chefHat from '../../assets/chefHat.jpeg'; // Assuming you have the path correct for the chef hat image
 
@@ -112,7 +113,7 @@ const Profile = ({ username }) => {
                   <CommentForm postId={post._id} fetchPosts={fetchUserPosts} username={username} />
                 </div>
               )}
-              <button onClick={() => handleDeletePost(post._id)}>Delete</button>
+              <button id = "del" onClick={() => handleDeletePost(post._id)}>Delete</button>
             </div>
           ))
         ) : (
