@@ -6,13 +6,16 @@ import chefHat from '../../assets/chefHat.jpeg'; // Assuming you have the path c
 
 const Profile = ({ username }) => {
   const [userPosts, setUserPosts] = useState([]);
+  const [showComments, setShowComments] = useState({});
+
   const [newUsername, setNewUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const fetchUserPosts = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/posts?username=${username}`);
+      //const response = await fetch(`http://localhost:8080/posts?username=${username}`);
+      const response = await fetch(`http://localhost:8080/posts`);
       const posts = await response.json();
       const filteredPosts = posts.filter((post) => post.username === username);
       setUserPosts(filteredPosts);
@@ -33,18 +36,29 @@ const Profile = ({ username }) => {
     fetchUserPosts();
   }, [username]);
 
+  const toggleComments = (postId) => {
+    setShowComments(prevState => ({
+      ...prevState,
+      [postId]: !prevState[postId]
+    }));
+  };
+
+
+
   const handleUsernameUpdate = async () => {
     try {
       const response = await fetch('http://localhost:8080/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Cookie': document.cookie 
         },
         body: JSON.stringify({ newUsername }),
       });
       if (response.ok) {
         setNewUsername('');
         // Ideally, you would update the username in the parent component and pass it down as a prop
+        fetchUserData();
         window.location.reload();
       } else {
         console.error('Failed to update username');
@@ -60,12 +74,14 @@ const Profile = ({ username }) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Cookie': document.cookie 
         },
         body: JSON.stringify({ currentPassword, newPassword }),
       });
       if (response.ok) {
         setCurrentPassword('');
         setNewPassword('');
+        fetchUserData();
       } else {
         console.error('Failed to update password');
       }
@@ -74,7 +90,20 @@ const Profile = ({ username }) => {
     }
   };
 
-
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/profile');
+      if (response.ok) {
+        const userData = await response.json();
+        // Update UI with new user data
+        setUsername(userData.username);
+      } else {
+        console.error('Failed to fetch user data');
+      }
+    } catch (err) {
+      console.error('Error fetching user data:', err);
+    }
+  };
 
   return (
     <div className="profile-container">
