@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './CommentForm.css'
 const CommentForm = ({ postId, fetchPosts, username }) => {
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
@@ -33,14 +33,19 @@ const CommentForm = ({ postId, fetchPosts, username }) => {
 
   return (
     <form onSubmit={handleCommentSubmit}>
-      <p>Posting as: <strong>{username}</strong></p>
+      
+      <div className = "commentForm"><p>Posting as: <strong>{username}</strong></p></div>
+      
+      <div className = "commentForm">
       <textarea
         placeholder="Add your comment"
         value={message}
         onChange={handleInputChange} // Use the handleInputChange function for onChange event
         required
       ></textarea>
-      <button type="submit">Submit Comment</button>
+      <button type="submit">Submit</button>
+
+      </div>
     </form>
   );
 };
