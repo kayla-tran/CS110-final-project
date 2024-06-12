@@ -1,6 +1,7 @@
-# Group __ Project: Recipe Sharing App
+# Tem 3 Project: Recipe Sharing App
 
 This is the final project for the class CS 110, Web Development at UC Riverside. 
+
 Contributors: Kayla Tran, Kelsey Musolf, Krish Shah, Anika Sood
 
 ## Installs needed
@@ -30,7 +31,7 @@ npm run start
 Below is more information on starting the app if you wish to learn more.
 
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
