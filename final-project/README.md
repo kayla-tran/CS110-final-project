@@ -1,4 +1,4 @@
-# Tem 3 Project: Recipe Sharing App
+# Team 3 Project: Recipe Sharing App
 
 This is the final project for the class CS 110, Web Development at UC Riverside. 
 
