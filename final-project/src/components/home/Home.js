@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import './Home.css';
+import CommentForm from '../commentForm/CommentForm'; 
 import chefHat from '../../assets/chefHat.jpeg';
 
 const Home = ({ username }) => {
@@ -9,8 +11,7 @@ const Home = ({ username }) => {
     try {
       const response = await fetch('http://localhost:8080/posts');
       const posts = await response.json();
-      console.log('Response Data:', posts);
-      console.log("Number of posts:", posts.length);
+      console.log('Fetched posts:', posts); // Debug log
       setPosts(posts);
     } catch (err) {
       console.error('Error fetching posts:', err);
@@ -52,6 +53,20 @@ const Home = ({ username }) => {
               <p className = "content">{post.content ?? 'No Content'}</p>
             </div>
           </div>
+          <div className = "element">
+            <h4>Comments</h4>
+              {post.comments.length > 0 ? (
+                post.comments.map((comment, index) => (
+                  <div key={index} className="comment">
+                    <p><strong>{comment.user}:</strong> {comment.message}</p>
+                    <p>{new Date(comment.time).toLocaleString()}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No comments yet.</p>
+              )}
+              <CommentForm postId={post._id} fetchPosts={fetchPosts} username={username} /> 
+            </div>
         </div>
       ))}
     </div>
