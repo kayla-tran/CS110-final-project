@@ -22,11 +22,6 @@ const Home = ({ username }) => {
     fetchPosts();
   }, []);
 
-  const handleCommentSubmit = async (postId) => {
-    // Implement the logic for submitting comments
-    fetchPosts(); // Refresh posts after adding comment
-  };
-
   return (
     <div className="post-container">
       {posts.map((post) => (
@@ -62,15 +57,14 @@ const Home = ({ username }) => {
               {post.comments.length > 0 ? (
                 post.comments.map((comment, index) => (
                   <div key={index} className="comment">
-                    <p><strong>{comment.user}:</strong> {comment.message}</p>
-                    <p>{new Date(comment.time).toLocaleString()}</p>
+                    <p><strong>{comment.username}:</strong> {comment.message}</p>
                   </div>
                 ))
               ) : (
                 <p>No comments yet.</p>
               )}
-           <CommentForm postId={post._id} handleCommentSubmit={handleCommentSubmit} username={username} />
-          </div>
+              <CommentForm postId={post._id} fetchPosts={fetchPosts} username={username} /> 
+            </div>
         </div>
       ))}
     </div>

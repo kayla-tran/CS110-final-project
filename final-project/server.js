@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { MongoClient, ObjectId } = require('mongodb');
@@ -145,20 +144,18 @@ app.get('/posts', async (req, res) => {
 
 //===========COMMENTS==============
 
-app.post('/posts/:postId/comments', async (req, res) => {
+app.post('/posts/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
-    const { user, message } = req.body;
+    const { message } = req.body;
     const db = req.app.locals.db;
     const posts = db.collection('posts4');
-    const comment = { 
-      user, 
-      message, 
-      time: new Date()
+    const comment = {
+      message 
     };
 
     const result = await posts.updateOne(
-      { _id: new MongoClient.ObjectId(postId) }, 
+      { _id: new ObjectId(postId) },
       { $push: { comments: comment } }
     );
 
@@ -173,17 +170,6 @@ app.post('/posts/:postId/comments', async (req, res) => {
   }
 });
 
-app.get('/posts/:postId/comments', async (req, res) => {
-  try {
-    const { postId } = req.params;
-    const comments = await getCommentsForPost(postId);
-
-    res.status(200).json(comments); // Replace comments with the actual comments fetched from the database
-  } catch (err) {
-    console.error("Error fetching comments:", err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 
 
