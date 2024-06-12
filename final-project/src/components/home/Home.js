@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import './Home.css';
 import CommentForm from '../commentForm/CommentForm'; 
@@ -7,11 +6,20 @@ import chefHat from '../../assets/chefHat.jpeg';
 const Home = ({ username }) => {
   const [posts, setPosts] = useState([]);
 
+  // State to manage comment container visibility
+  const [showComments, setShowComments] = useState({});
+
   const fetchPosts = async () => {
     try {
       const response = await fetch('http://localhost:8080/posts');
       const posts = await response.json();
       console.log('Fetched posts:', posts); // Debug log
+      // Initialize showComments state for each post
+      const initialShowComments = {};
+      posts.forEach(post => {
+        initialShowComments[post._id] = false;
+      });
+      setShowComments(initialShowComments);
       setPosts(posts);
     } catch (err) {
       console.error('Error fetching posts:', err);
@@ -21,6 +29,14 @@ const Home = ({ username }) => {
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  // Function to toggle comment container visibility
+  const toggleComments = (postId) => {
+    setShowComments(prevState => ({
+      ...prevState,
+      [postId]: !prevState[postId]
+    }));
+  };
 
   return (
     <div className="post-container">
@@ -53,9 +69,12 @@ const Home = ({ username }) => {
               <p className = "content">{post.content ?? 'No Content'}</p>
             </div>
           </div>
-          <div className = "element">
-            <h4>Comments</h4>
-              {post.comments.length > 0 ? (
+          {/* Comment button */}
+          <button className="comments" onClick={() => toggleComments(post._id)}>Comments</button>
+          {/* Comment container */}
+          {showComments[post._id] && (
+            <div className="comment-container">
+              {post.comments && post.comments.length > 0 ? (
                 post.comments.map((comment, index) => (
                   <div key={index} className="comment">
                     <p><strong>{comment.user}:</strong> {comment.message}</p>
@@ -67,11 +86,11 @@ const Home = ({ username }) => {
               )}
               <CommentForm postId={post._id} fetchPosts={fetchPosts} username={username} /> 
             </div>
+          )}
         </div>
       ))}
     </div>
-);
-
+  );
 };
 
 export default Home;
