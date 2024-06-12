@@ -1,26 +1,25 @@
-# Team 3 Project: Recipe Sharing App
+# Welcome to RecipeShare 🍳🌟
 
-This is the final project for the class CS 110, Web Development at UC Riverside. 
+Hi there! Do you like to cook and do you love food? Do you enjoy sharing recipes with your friends and have a strong enthusiasm for them? There's nowhere else to look! Greetings from RecipeShare! For those who love to interact, discover, and share their culinary masterpieces, here is the place to be.
 
-Contributors: Kayla Tran, Kelsey Musolf, Krish Shah, Anika Sood
+## Key Features:
 
-## Installs needed
+👩‍🍳 **Share Your Recipes:**  Share your most cherished recipes with the community by uploading them. Display everything, even your delectable main courses and amazing deserts! We can't wait to see everything!
 
-Before opening, please 'cd' into the folder 'final-project' and in the terminal type:
+📸 **Visual Inspiration:** Add some flair to your recipes and meals by using eye-catching photos to showcase your culinary innovations. We would want to see a thousand images since a picture is worth a thousand words!
 
-npm install 
+💬 **Comment Your Ideas:** With RecipeShare's interactive comment function, you can receive advice, suggestions, and praise from other food enthusiasts. Make connections, exchange culinary advice, and encourage one another to be inventive in the kitchen.
 
-## Starting the Server
+🔍 **Find Fresh Recipes:** Browse through a vast library of recipes that users from all around the world have submitted. RecipeShare has something for every taste, whether you're searching for sophisticated dinner party fare, easy weekday dinners, or decadent desserts.
 
-We used MongoDB for this project which holds our database of users and posts.
-To start the server,go into the terminal and type:
+## Beginning the Process
 
-node server.js
+Are you ready to become a member of RecipeShare? To get started, just take these easy steps:
 
-This starts the server and connects it to the MongoDB.
+1. **Sign Up**
 
-## Starting the Webpage
+2. **Explore Recipes**
 
-To open the app, open a new terminal. In this terminal make sure you are cd'd into the 'final-project' folder and then type:
+3. **Share Your Creations**
 
-npm run start
+4. **Engage with the Community**
