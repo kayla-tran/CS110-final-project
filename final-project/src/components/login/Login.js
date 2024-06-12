@@ -96,7 +96,7 @@ const Login = ({onLogin}) => {
                     required
                 />
                 <br />
-                <button type="submit">{isRegister ? 'Register' : 'Login'}</button>
+                <button type="submit" id = "login">{isRegister ? 'Register' : 'Login'}</button>
                 <button type="button" onClick={handleGoogleClick}>Sign in with Google</button>
             </form>
             <p>{message}</p>

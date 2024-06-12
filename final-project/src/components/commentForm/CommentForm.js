@@ -6,6 +6,10 @@ const CommentForm = ({ postId, fetchPosts, username }) => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    if (!username) {
+      window.alert('Error: Must login to post!');
+      return;
+    }
     try {
       const response = await fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'POST',

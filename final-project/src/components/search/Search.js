@@ -77,8 +77,11 @@ function Search() {
             value={contentQuery}
             onChange={(e) => setContentQuery(e.target.value)}
           />
+          <p>
+          </p>
+          <button type="submit">Search</button>
         </form>
-        <button type="submit">Search</button>
+        
         <div className="post-container">
         <div id="searchResults">
           {filteredPosts.map((post) => (
