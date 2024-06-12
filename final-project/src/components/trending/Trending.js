@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './Trending.css';
 import chefHat from '../../assets/chefHat.jpeg';
+import CommentForm from '../commentForm/CommentForm'; 
 
 const Trending = ({username}) => {
   const [trendingPosts, setTrendingPosts] = useState([]);
-
+  // State to manage comment container visibility
+  const [showComments, setShowComments] = useState({});
   const fetchTrendingPosts = async () => {
     try {
       const response = await fetch('http://localhost:8080/posts/'); 
@@ -33,8 +35,18 @@ const Trending = ({username}) => {
     fetchTrendingPosts();
   }, []);
 
+
+  // Function to toggle comment container visibility
+  const toggleComments = (postId) => {
+    setShowComments(prevState => ({
+      ...prevState,
+      [postId]: !prevState[postId]
+    }));
+  };
+
   return (
-    <div className="post-container">
+   <div className="post-container">
+      <p></p>
       {trendingPosts.map((post) => (
         <div key={post._id} className="post">
           <div className="element">
@@ -43,26 +55,43 @@ const Trending = ({username}) => {
                 <img src={chefHat} className="chefHat" alt="Chef Hat" />
               </div>
               <div>
-                <h3>{post.username ?? 'Unknown User'}</h3>
+                <h3>@{post.username ?? 'Unknown User'}</h3>
               </div>
               <div>
                 <p>{new Date(post.createdAt).toLocaleString() ?? 'Unknown Date'}</p>
               </div>
             </div>
           </div>
-          <div className="element">
-            {post.image ? (
-              <img src={post.image} alt="Post" className="post-img" />
-            ) : (
-              <p>No Image Available</p>
-            )}
-          </div>
-          <div className="element">
+          <div className="element post-content"> {/* Move post-content below top-bar */}
+            <div>
+              {post.image ? (
+                <img src={post.image} alt="Post" className="post-img" />
+              ) : (
+                <p>No Image Available</p>
+              )}
+            </div>
             <div className="bottom-box">
-              <p>{post.caption ?? 'No Caption'}</p>
-              <p>{post.content ?? 'No Content'}</p>
+              <p className = "caption">{post.caption ?? 'No Caption'}</p>
+              <p className = "content">{post.content ?? 'No Content'}</p>
             </div>
           </div>
+          {/* Comment button */}
+          <button className="comments" onClick={() => toggleComments(post._id)}>Comments</button>
+          {/* Comment container */}
+          {showComments[post._id] && (
+            <div className="comment-container">
+              {post.comments && post.comments.length > 0 ? (
+                post.comments.map((comment, index) => (
+                  <div key={index} className="comment">
+                    <p><strong>{comment.user}:</strong> {comment.message}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No comments yet.</p>
+              )}
+              <CommentForm postId={post._id} fetchPosts={fetchTrendingPosts} username={username} /> 
+            </div>
+          )}
         </div>
       ))}
     </div>
