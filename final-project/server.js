@@ -106,6 +106,114 @@ app.get('/profile', (req, res) => {
   }
 });
 
+//===========UPDATING ACCOUNT==============
+
+app.put('/profile', async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { newUsername, currentPassword, newPassword } = req.body;
+    const db = req.app.locals.db;
+    const users = db.collection('users');
+
+    // Update username
+    if (newUsername) {
+      const existingUser = await users.findOne({ username: newUsername });
+      if (existingUser) {
+        return res.status(400).json({ error: 'Username already exists' });
+      }
+
+      await users.updateOne(
+        { username: req.session.user.username },
+        { $set: { username: newUsername } }
+      );
+
+      req.session.user.username = newUsername;
+      return res.status(200).json({ message: 'Username updated successfully' });
+    }
+
+    // Update password
+    if (currentPassword && newPassword) {
+      const user = await users.findOne({ username: req.session.user.username });
+
+      if (!user || !await bcrypt.compare(currentPassword, user.password)) {
+        return res.status(400).json({ error: 'Invalid current password' });
+      }
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      await users.updateOne(
+        { username: req.session.user.username },
+        { $set: { password: hashedNewPassword } }
+      );
+
+      return res.status(200).json({ message: 'Password updated successfully' });
+    }
+
+    res.status(400).json({ error: 'No valid update fields provided' });
+  } catch (err) {
+    console.error("Update profile error:", err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Update username
+// app.put('/profile', async (req, res) => {
+//   try {
+//     if (!req.session.user) {
+//       return res.status(401).json({ error: 'Unauthorized' });
+//     }
+//     const { newUsername } = req.body;
+//     const db = req.app.locals.db;
+//     const users = db.collection('users');
+
+//     const existingUser = await users.findOne({ username: newUsername });
+//     if (existingUser) {
+//       return res.status(400).json({ error: 'Username already exists' });
+//     }
+
+//     await users.updateOne(
+//       { username: req.session.user.username },
+//       { $set: { username: newUsername } }
+//     );
+
+//     req.session.user.username = newUsername;
+//     res.status(200).json({ message: 'Username updated successfully' });
+//   } catch (err) {
+//     console.error("Update username error:", err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+// Update password
+// app.put('/profile/password', async (req, res) => {
+//   try {
+//     if (!req.session.user) {
+//       return res.status(401).json({ error: 'Unauthorized' });
+//     }
+//     const { currentPassword, newPassword } = req.body;
+//     const db = req.app.locals.db;
+//     const users = db.collection('users');
+//     const user = await users.findOne({ username: req.session.user.username });
+
+//     if (!user || !await bcrypt.compare(currentPassword, user.password)) {
+//       return res.status(400).json({ error: 'Invalid current password' });
+//     }
+
+//     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+//     await users.updateOne(
+//       { username: req.session.user.username },
+//       { $set: { password: hashedNewPassword } }
+//     );
+
+//     res.status(200).json({ message: 'Password updated successfully' });
+//   } catch (err) {
+//     console.error("Update password error:", err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+
 //============POSTS=============
 
 app.post('/posts', async (req, res) => {
