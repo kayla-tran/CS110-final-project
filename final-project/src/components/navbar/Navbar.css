@@ -1,24 +1,69 @@
 .bar {
-    display: flex;
-    align-items: center;
-    background-color: lightblue; /* Example background color */
-    color: black; /* Example text color */
-    padding: 10px 20px; /* Example padding */
-  }
-  
-  .bar ul {
-    list-style: none;
-    display: flex; /* Display list items as flex items */
-  }
-  
-  .bar ul li {
-    margin-left: auto; /* Align each list item to the right */
-  }
-  
-  .bar ul li a {
-    text-decoration: none;
-    color: white; 
-    
-  }
-  
-  
+  display: flex;
+  align-items: center;
+  background-color: rgb(0, 6, 7); /* Example background color */
+  color: black; /* Example text color */
+  width: 100%;
+  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1); /* Add this line to create a bottom shadow */
+
+}
+
+.bar ul {
+  list-style: none;
+  display: flex; /* Display list items as flex items */
+  padding: 0px;
+}
+
+.bar ul li {
+  margin-left: auto; /* Align each list item to the right */
+}
+
+.bar ul li a {
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(220, 238, 253);
+}
+
+
+.barContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Add this to push left and right sections apart */
+  width: 100%; /* Ensure the content spans the full width */
+}
+
+.barButton {
+  border-bottom: 5px solid;
+  border-color: rgba(255, 255, 255, 0);
+  display: flex;
+  padding: 0px 10px 0px 10px;
+  font-weight: 600;
+}
+
+a {
+  display: flex;
+  text-decoration: none;
+  color: white;
+  gap: 100px;
+}
+
+.barButton:hover {
+  border-bottom: 5px solid;
+  border-color: rgb(235, 246, 255);
+  color:  rgb(235, 246, 255);
+  display: flex;
+  padding: 0px 10px 0px 10px;
+}
+
+.left {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}

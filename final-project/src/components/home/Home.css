@@ -1,64 +1,94 @@
-
 .post-container {
-    max-height: 800px; 
-    max-width: 800px;
-    overflow-y: auto; 
-    margin: auto; /* Add this line to center horizontally */
-   
-  }
-
-.post{
-    margin-bottom: 20px; 
-    padding: 10px; 
-    max-width: 700px;
+    width: 80%;
+    margin: auto; /* Center the container horizontally */
 }
-.post div {
-    margin: 0; 
-  }
 
-.element{
-    margin: 10px;
-    padding: 20px;
-    background-color: lightblue;
+.post div {
+    margin: 0;
+}
+
+.element {
+    margin: 30px;
+    background-color: rgb(249, 253, 255);
     color: black;
-    width: 100%; 
     text-align: center;
 }
 
-.top-bar{
+.top-bar {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 10px;
 }
 
-.top-bar h3{
+.top-bar h3 {
     margin-top: 30px;
     font-size: 24px;
 }
 
-.top-bar p{
+.top-bar p {
     margin-left: auto;
     margin-top: 35px;
-     
+    font-size: 20px;
 }
 
-.post-img{
+.post-img {
     width: 200px;
     height: 250px;
+    object-fit: cover;
 }
 
-.chefHat{
-    width: 100px;
+.chefHat {
+    width: 70px;
     border-radius: 50%;
+    border: solid;
+    border-color: black;
+    margin: 20px 0px 0px 10px;
 }
 
-.bottom-box{
+.bottom-box {
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(209, 229, 245, 0.436);
+    width: 100%;
 }
 
-.bottom-box p{
+.bottom-box p {
     text-align: left;
-} 
+}
 
+body {
+    font-family: "Wix Madefor Display", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    background-color: rgb(243, 243, 243);
+}
 
+.post {
+    display: flex;
+    flex-direction: column; /* Change flex direction to column */
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgb(249, 253, 255);
+    border-radius: 5px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); /* Create a bottom shadow */
+}
+
+.post-content {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 90%;
+    padding-left: 10%;
+    padding-bottom: 3%;
+}
+
+.caption{
+    font-size: 30px;
+}
+
+.content{
+    font-size: 18px;
+}
