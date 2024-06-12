@@ -30,7 +30,7 @@ npm run start
 Below is more information on starting the app if you wish to learn more.
 
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
