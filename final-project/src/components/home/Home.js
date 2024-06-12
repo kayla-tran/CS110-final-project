@@ -57,7 +57,7 @@ const Home = ({ username }) => {
               {post.comments.length > 0 ? (
                 post.comments.map((comment, index) => (
                   <div key={index} className="comment">
-                    <p><strong>{comment.username}:</strong> {comment.message}</p>
+                    <p><strong>{comment.user}:</strong> {comment.message}</p>
                   </div>
                 ))
               ) : (
