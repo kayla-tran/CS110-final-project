@@ -22,6 +22,11 @@ const Home = ({ username }) => {
     fetchPosts();
   }, []);
 
+  const handleCommentSubmit = async (postId) => {
+    // Implement the logic for submitting comments
+    fetchPosts(); // Refresh posts after adding comment
+  };
+
   return (
     <div className="post-container">
       {posts.map((post) => (
@@ -64,8 +69,8 @@ const Home = ({ username }) => {
               ) : (
                 <p>No comments yet.</p>
               )}
-              <CommentForm postId={post._id} fetchPosts={fetchPosts} username={username} /> 
-            </div>
+           <CommentForm postId={post._id} handleCommentSubmit={handleCommentSubmit} username={username} />
+          </div>
         </div>
       ))}
     </div>
