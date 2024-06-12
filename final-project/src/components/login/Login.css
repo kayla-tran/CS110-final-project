@@ -6,6 +6,8 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    align-content: center;
+    margin-top: 3%;
   }
   
   .login-container h2 {
@@ -18,7 +20,7 @@
   }
   
   .login-container input {
-    width: 100%;
+    width: 93%;
     padding: 0.5em;
     margin-top: 0.5em;
     border: 1px solid #ccc;
@@ -29,7 +31,7 @@
     width: 100%;
     padding: 0.5em;
     margin-top: 1em;
-    background-color: #007BFF;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -37,7 +39,7 @@
   }
   
   .login-container button:hover {
-    background-color: #0056b3;
+    background-color: #0c253f;
   }
   
   .login-container p {
@@ -54,3 +56,10 @@
     margin: 1em auto;
   }
   
+  #username{
+    width: 93%;
+  }
+
+  #login{
+    width: 100%;
+  }
