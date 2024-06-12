@@ -6,12 +6,30 @@ const Navbar = () => {
   return (
     <nav>
       <div className="bar">
-        <ul><Link to="/">Home</Link></ul>
-        <ul><Link to="/trending">Trending</Link></ul>
-        <ul><Link to="/search">Search</Link></ul>
-        <ul><Link to="/create-post">Create Post</Link></ul>
-        <ul><Link to="/profile">Profile</Link></ul>
-        <ul><Link to="/account">Login</Link></ul>
+        <div className="barContent">
+          <div className="left">
+            <div className="barButton">
+              <ul><Link to="/">Home</Link></ul>
+            </div>
+            <div className="barButton">
+              <ul><Link to="/trending">Trending</Link></ul>
+            </div>
+            <div className="barButton">
+              <ul><Link to="/search">Search</Link></ul>
+            </div>
+            <div className="barButton">
+              <ul><Link to="/create-post">Create Post</Link></ul>
+            </div>
+          </div>
+          <div className="right">
+            <div className="barButton">
+              <ul><Link to="/profile">Profile</Link></ul>
+            </div>
+            <div className="barButton">
+              <ul><Link to="/account">Login</Link></ul>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
