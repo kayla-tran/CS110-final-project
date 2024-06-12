@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(session({
-  secret: 'secret-key-1234567890',
+  secret: 'scary-secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // Set to true if using HTTPS
@@ -90,6 +90,7 @@ app.post('/login', async (req, res) => {
     console.log('Session user:', req.session.user);
     console.log('Session:', req.session);
 
+    console.log('Login successful');
     res.status(200).json({ message: 'Login successful' });
   } catch (err) {
     console.error("Login error:", err);
@@ -119,6 +120,7 @@ app.get('/profile', (req, res) => {
 app.put('/profile', async (req, res) => {
   try {
     console.log('Session for update:', req.session);
+    console.log('session USER: ', req.session.user);
     if (!req.session.user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }

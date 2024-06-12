@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Post.css';
 
 const PostForm = ({ username }) => {
-  const [userName, setUserName] = useState('');
   const [content, setContent] = useState('');
   const [caption, setCaption] = useState('');
   const [image, setImage] = useState('');
@@ -10,18 +9,21 @@ const PostForm = ({ username }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username) {
+      window.alert('Error: Must login to post!');
+      return;
+    }
     try {
       const response = await fetch('http://localhost:8080/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, content, caption, image }), // Include all fields here
+        body: JSON.stringify({ username, content, caption, image }),
       });
       if (response.ok) {
         const post = await response.json();
         // Reset form fields
-        setUserName(username);
         setContent('');
         setCaption('');
         setImage('');
