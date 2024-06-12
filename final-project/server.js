@@ -36,8 +36,8 @@ async function connectToDatabase() {
       await db.createCollection("users");
       console.log("Created users collection");
     }
-    if (!collections.map(coll => coll.name).includes("posts4")) {
-      await db.createCollection("posts4");
+    if (!collections.map(coll => coll.name).includes("posts")) {
+      await db.createCollection("posts");
       console.log("Created posts collection");
     }
   } catch (err) {
@@ -112,7 +112,7 @@ app.post('/posts', async (req, res) => {
   try {
     const { username, content, image, caption } = req.body || {};
     const db = req.app.locals.db;
-    const posts = db.collection('posts4');
+    const posts = db.collection('posts');
     const newPost = { 
       username, 
       content, 
@@ -133,7 +133,7 @@ app.post('/posts', async (req, res) => {
 app.get('/posts', async (req, res) => {
   try {
     const db = req.app.locals.db;
-    const posts = db.collection('posts4');
+    const posts = db.collection('posts');
     const allPosts = await posts.find().toArray();
     res.status(200).json(allPosts);
   } catch (err) {
@@ -147,10 +147,11 @@ app.get('/posts', async (req, res) => {
 app.post('/posts/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
-    const { message } = req.body;
+    const { user, message } = req.body;
     const db = req.app.locals.db;
-    const posts = db.collection('posts4');
+    const posts = db.collection('posts');
     const comment = {
+      user,
       message 
     };
 
