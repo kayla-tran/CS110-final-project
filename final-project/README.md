@@ -101,3 +101,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img width="1359" alt="Screen Shot 2024-06-11 at 11 02 20 PM" src="https://github.com/kayla-tran/CS110-final-project/assets/93096365/0df23297-e528-44a9-9c09-ff15e3f5d78d">
+<img width="1371" alt="Screen Shot 2024-06-11 at 11 01 52 PM" src="https://github.com/kayla-tran/CS110-final-project/assets/93096365/3eb9eefb-0add-4a32-a8bc-98dc4bf3b88d">
+<img width="1370" alt="Screen Shot 2024-06-11 at 11 01 43 PM" src="https://github.com/kayla-tran/CS110-final-project/assets/93096365/88177e88-1cfa-4c87-9c30-887aa9c89810">
+<img width="1372" alt="Screen Shot 2024-06-11 at 11 01 35 PM" src="https://github.com/kayla-tran/CS110-final-project/assets/93096365/6168154a-c2e6-4035-a4c2-ad17d8fe9422">
+<img width="1368" alt="Screen Shot 2024-06-11 at 11 02 38 PM" src="https://github.com/kayla-tran/CS110-final-project/assets/93096365/fe11566a-5f40-4dc6-bd67-1b98fe6edefd">
