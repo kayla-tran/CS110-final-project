@@ -57,8 +57,7 @@ const Home = ({ username }) => {
               {post.comments.length > 0 ? (
                 post.comments.map((comment, index) => (
                   <div key={index} className="comment">
-                    <p><strong>{comment.user}:</strong> {comment.message}</p>
-                    <p>{new Date(comment.time).toLocaleString()}</p>
+                    <p><strong>{comment.username}:</strong> {comment.message}</p>
                   </div>
                 ))
               ) : (
