@@ -46,6 +46,10 @@ const Trending = ({username}) => {
 
   return (
    <div className="post-container">
+     <header>
+        <h1>Trending</h1>
+        <p>View the top recipes!</p>
+      </header>
       <p></p>
       {trendingPosts.map((post) => (
         <div key={post._id} className="post">

@@ -4,28 +4,27 @@ import CommentForm from '../commentForm/CommentForm';
 import chefHat from '../../assets/chefHat.jpeg';
 
 
-function Search({ username }) {
+function Search() {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [usernameQuery, setUsernameQuery] = useState('');
   const [captionQuery, setCaptionQuery] = useState('');
   const [contentQuery, setContentQuery] = useState('');
   const [showComments, setShowComments] = useState({});
-  
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/posts');
+      const data = await response.json();
+      data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setPosts(data);
+      setFilteredPosts(data);
+    } catch (err) {
+      console.error('Error fetching posts:', err);
+    }
+  };
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/posts');
-        const data = await response.json();
-        data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setPosts(data);
-        setFilteredPosts(data);
-      } catch (err) {
-        console.error('Error fetching posts:', err);
-      }
-    };
-
     fetchPosts();
+    
   }, []);
 
   const handleSearch = (e) => {
