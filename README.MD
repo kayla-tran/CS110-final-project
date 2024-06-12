@@ -4,13 +4,13 @@ Hi there! Do you like to cook and do you love food? Do you enjoy sharing recipes
 
 ## Key Features:
 
-👩‍🍳 **Share Your Recipes:**  Share your most cherished recipes with the community by uploading them. Display everything, even your delectable main courses and amazing deserts! We can't wait to see everything!
+👩‍🍳 **Share Your Recipes:**  Share your best recipes with the community by uploading them. Show off your stuff from main courses to deserts! We can't wait to see everything!
 
-📸 **Visual Inspiration:** Add some flair to your recipes and meals by using eye-catching photos to showcase your culinary innovations. We would want to see a thousand images since a picture is worth a thousand words!
+📸 **Visual Inspiration:** Add some flair to your recipes and meals. Give us a few cool pictures of your creation. Since a picture is worth a thousand words, we want a thousand pictures!
 
-💬 **Comment Your Ideas:** With RecipeShare's interactive comment function, you can receive advice, suggestions, and praise from other food enthusiasts. Make connections, exchange culinary advice, and encourage one another to be inventive in the kitchen.
+💬 **Comment Your Ideas:** With RecipeShare's comments, you can talk to others to get advice, hear back some suggestions, and send and recieve praise from other food enthusiasts. This is all to help you make connections and encourage one another to be inventive in the kitchen.
 
-🔍 **Find Fresh Recipes:** Browse through a vast library of recipes that users from all around the world have submitted. RecipeShare has something for every taste, whether you're searching for sophisticated dinner party fare, easy weekday dinners, or decadent desserts.
+🔍 **Find Fresh Recipes:** Look through our long library of recipes that many different people from all around the world have submitted. We has something for everyone!
 
 ## Beginning the Process
 
